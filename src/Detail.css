@@ -3,144 +3,423 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  background-color: #121212;
-  color: #fff;
+  background-color: #ffffff;
+  color: #121212;
   font-family: 'Pretendard', sans-serif;
   overscroll-behavior: none;
 }
 
-/* 헤더 */
-.header {
-  position: fixed; top: 0; left: 0; width: 100%; height: 50px;
-  background-color: #121212; border-bottom: 1px solid #333;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0 20px; z-index: 100;
-}
-.logo { font-size: 24px; cursor: pointer; }
-.nav-switch { font-size: 22px; color: #777; margin-left: 404px; }
-.lets-talk { font-size: 22px; cursor: pointer; }
-
-/* 레이아웃 */
-.detail-container { padding-top: 50px; width: 100%; min-height: 100vh; }
-.main-body { display: flex; width: 100%; }
-
-/* [왼쪽] 패널 */
-.left-panel {
-  width: 70%;
-  border-right: 1px solid #333;
-  padding: 0 10px;
-}
-
-/* 🔥 이미지 블록 - 원본 비율 유지 */
-.img-block {
+/* =========================================
+   헤더 - 불투명 배경
+   ========================================= */
+.detail-container .header {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto; /* 고정 높이 제거! */
-  display: block;
-  margin-bottom: 20px;
-  pointer-events: none; /* 클릭 방지 */
-  user-select: none; /* 드래그 방지 */
-}
-
-/* 마지막 이미지 블록은 아래 여백 제거 */
-.img-block:last-child {
-  margin-bottom: 0;
-}
-
-/* [오른쪽] 패널 */
-.right-panel {
-  width: 30%;
-  min-width: 320px;
-  height: calc(100vh - 50px);
-  position: sticky;
-  top: 50px;
-  padding: 10px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid #e0e0e0;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 100;
 }
 
-/* --- [오른쪽 텍스트 스타일] --- */
-.txt-content { width: 100%; }
+.detail-container .logo {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: -15px;
+}
 
-/* 1. 제목 */
-.project-title {
-  font-size: 28px;
+.detail-container .logo-img {
+  height: 96px !important;
+  width: auto;
+}
+
+/* =========================================
+   메인 컨테이너
+   ========================================= */
+.detail-container {
+  padding-top: 50px;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+/* 햄버거 메뉴 (X 버튼) - 기본 숨김 */
+.hamburger-menu {
+  display: none;
+}
+
+/* 🔥 웹에서 디테일 페이지에서만 X 버튼 보이기 */
+@media (min-width: 769px) {
+  .detail-container .hamburger-menu {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    gap: 6px;
+  }
+
+  .detail-container .hamburger-menu span {
+    width: 24px;
+    height: 2px;
+    background-color: #121212;
+    transition: 0.3s ease-in-out;
+    transform-origin: center;
+  }
+
+  .detail-container .hamburger-menu.open span:nth-child(1) {
+    transform: translateY(4px) rotate(45deg);
+  }
+
+  .detail-container .hamburger-menu.open span:nth-child(2) {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+}
+
+/* =========================================
+   🔥 A24 스타일 레이아웃
+   ========================================= */
+.detail-content {
+  display: flex;
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  padding: 60px 40px;
+  gap: 60px;
+}
+
+/* 왼쪽: 정보 영역 */
+.detail-info {
+  width: 40%;
+  max-width: 900px;
+  position: sticky;
+  top: 120px;
+  height: fit-content;
+}
+
+.detail-category {
+  font-size: 12px;
   font-weight: 500;
-  margin-bottom: 12px;
-  line-height: 1.2;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 20px;
 }
 
-/* 2. 설명글 */
-.project-desc {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #ddd;
-  margin-bottom: 30px;
-  word-break: keep-all;
-  white-space: pre-wrap;
+.detail-title {
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  color: #121212;
 }
 
-/* 3. 메타 정보 */
-.meta-info { margin-top: auto; }
+.detail-subtitle {
+  font-size: 18px;
+  color: #888;
+  margin-bottom: 40px;
+}
+
+.detail-meta {
+  margin-bottom: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
 
 .meta-row {
   display: flex;
   margin-bottom: 8px;
-  font-size: 16px;
-  color: #f1f1f1;
+  font-size: 14px;
 }
 
 .meta-label {
-  display: inline-block;
   width: 80px;
-  color: #f1f1f1;
-  font-weight: 300;
+  color: #888;
+  font-weight: 500;
 }
 
 .meta-value {
-  color: #ccc;
-  font-weight: 400;
+  color: #444;
 }
-/* =========================================
-   📱 모바일 반응형 (768px 이하)
-   ========================================= */
+
+.detail-description {
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.desc-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 16px;
+}
+
+.desc-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #444;
+  white-space: pre-line;
+}
+
+/* 오른쪽: 이미지 영역 */
+.detail-images {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.detail-image-wrapper {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+}
+
+.detail-image {
+  width: 100%;
+  max-height: 70vh;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
 
 /* =========================================
-   📱 모바일 반응형 (480px 이하만)
+   🔥 하단 관련 프로젝트 - 가로 스크롤
    ========================================= */
+/* =========================================
+   🔥 하단 관련 프로젝트 - 가로 스크롤
+   ========================================= */
+.related-section {
+  padding: 40px 60px;
+  background-color: #f5f5f5;
+  color: #121212;
+  border-top: 1px solid #e0e0e0;
+  overflow: hidden;
+}
+
+.related-title {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 24px;
+  color: #121212;
+}
+
+/* 🔥 가로 스크롤 컨테이너 */
+.related-grid {
+  display: flex;
+  gap: 60px; /* 🔥 40px → 60px 간격 더 넓게 */
+  overflow-x: auto;
+  padding-bottom: 20px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  justify-content: center;
+  align-items: center; /* 🔥 flex-end → center 가운데 정렬 */
+}
+
+/* 스크롤바 숨기기 */
+.related-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.related-grid {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 🔥 카드 스타일 */
+.related-card {
+  flex-shrink: 0;
+  width: 200px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 🔥 전체 가운데 정렬 */
+}
+
+.related-card:hover {
+  opacity: 0.7;
+}
+
+/* 🔥 이미지 영역 */
+.related-image-wrapper {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.related-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* 🔥 텍스트 영역 - 가운데 배치하되 내부는 왼쪽 정렬 */
+.related-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 🔥 제목과 년도 왼쪽 맞춤 */
+}
+
+/* 🔥 제목 */
+.related-card-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #121212;
+  text-align: left;
+  max-width: 180px;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+/* 🔥 날짜 */
+.related-card-date {
+  font-size: 14px;
+  color: #888;
+  margin-top: 0px;
+  text-align: left;
+}
+
+/* 🔥 텍스트 영역 - 가운데 배치하되 내부는 왼쪽 정렬 */
+.related-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.related-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.20); /* 🔥 오른쪽 하단 그림자 */
+}
+
+/* =========================================
+   관리자 업로드 섹션
+   ========================================= */
+.admin-upload-section {
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+}
+
+.admin-upload-section h4 {
+  color: #121212;
+  margin-bottom: 10px;
+}
+
+.admin-upload-section input {
+  margin-bottom: 10px;
+  color: #121212;
+}
+
+.admin-upload-section button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.admin-upload-section button:disabled {
+  background-color: #ccc;
+}
+
+/* =========================================
+   📱 모바일 반응형
+   ========================================= */
+@media (max-width: 1024px) {
+  .detail-content {
+    flex-direction: column;
+    padding: 40px 20px;
+    gap: 40px;
+  }
+
+  .detail-info {
+    width: 100%;
+    max-width: none;
+    position: static;
+  }
+
+  .detail-title {
+    font-size: 36px;
+  }
+
+  .related-card {
+    width: 150px;
+  }
+
+  .related-image-wrapper {
+    height: 220px;
+  }
+}
 
 @media (max-width: 480px) {
-  
-  /* 레이아웃 세로로 */
-  .main-body {
-    flex-direction: column;
+  .detail-container .header {
+    padding: 0 20px;
+    height: 50px;
   }
 
-  .left-panel {
-    width: 100%;
-    border-right: none;
-    padding: 0;
+  .detail-container {
+    padding-top: 50px;
   }
 
-  .img-block {
-    margin-bottom: 0;
+  .detail-content {
+    padding: 30px 16px;
   }
 
-  .right-panel {
-    width: 100%;
-    position: static;
-    height: auto;
-    padding: 30px 20px 40px 20px;
+  .detail-title {
+    font-size: 28px;
   }
 
-  .project-title {
-    font-size: 24px;
+  .detail-category {
+    font-size: 11px;
   }
 
-  .project-desc {
-    font-size: 15px;
+  .related-section {
+    padding: 40px 16px;
   }
 
-  .meta-row {
-    font-size: 14px;
+  .related-card {
+    width: 140px;
   }
+
+  .related-image-wrapper {
+    height: 180px;
+  }
+
+  .related-card-title {
+    font-size: 13px;
+  }
+}.detail-container {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

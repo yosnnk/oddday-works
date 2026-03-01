@@ -8,13 +8,13 @@ html, body {
 }
 
 :root {
-  --bg-color: #121212;
-  --text-main: #FFFFFF;
-  --text-sub: #777777;       
-  --border-color: #333333;
-  --input-bg: #1E1E1E;
-  --input-hover: #2C2C2C; 
-  --error-color: #ff3b30; 
+  --bg-color: #ffffff;
+  --text-main: #121212;
+  --text-sub: #888888;
+  --border-color: #e0e0e0;
+  --input-bg: #f5f5f5;
+  --input-hover: #eeeeee;
+  --error-color: #ff3b30;
 }
 
 * { 
@@ -31,8 +31,8 @@ body {
 }
 
 /* =========================================
-   1. 헤더 (고정)
-   ========================================= */
+  1. 헤더 (고정)
+  ========================================= */
 .header {
   position: fixed;
   top: 0; 
@@ -48,16 +48,22 @@ body {
   z-index: 100;
 }
 
-.logo { 
-  font-size: 24px; 
-  font-weight: 400; 
-  cursor: pointer; 
+.logo {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: -14px;
+}
+
+.logo-img {
+  height: 50px;
+  width: auto;
 }
 
 .nav-switch { 
   font-size: 22px; 
   color: var(--text-sub); 
-  margin-left: 404px; 
+  margin-left: 550px; 
 } 
 
 .nav-switch span { 
@@ -76,17 +82,19 @@ body {
 
 .lets-talk { 
   font-size: 22px; 
-  cursor: pointer; 
+  cursor: pointer;
+  color: var(--text-main);
 }
 
 /* =========================================
-   2. 레이아웃 구조 (좌/우 분할)
-   ========================================= */
+  2. 레이아웃 구조 (좌/우 분할)
+  ========================================= */
 .container { 
   display: flex; 
   padding-top: 50px; 
   min-height: 100vh;
-  width: 100%; 
+  width: 100%;
+  background-color: var(--bg-color);
 }
 
 /* [왼쪽] 콘텐츠 영역 */
@@ -96,6 +104,7 @@ body {
   position: relative;
   overflow-y: auto;
   height: calc(100vh - 50px);
+  background-color: var(--bg-color);
 }
 
 /* [오른쪽] 사이드바 영역 */
@@ -109,13 +118,14 @@ body {
   padding: 0 20px;
   display: flex; 
   flex-direction: column;
+  background-color: var(--bg-color);
 }
 
 /* =========================================
-   3. 메인 페이지 (목록 뷰) 스타일
-   ========================================= */
+  3. 메인 페이지 (목록 뷰) 스타일
+  ========================================= */
 
-/* (1) 상단 고정 필터바 - 핵심 수정! */
+/* (1) 상단 고정 필터바 */
 .sub-header {
   position: sticky;
   top: 0;
@@ -125,25 +135,35 @@ body {
   display: flex; 
   align-items: center; 
   
-  /* 블러 효과 */
-  background-color: rgba(18, 18, 18, 0.75);
+  /* 블러 효과 - 화이트 모드 */
+  background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(51, 51, 51, 0.5);
+  border-bottom: 1px solid var(--border-color);
 }
 
-.filter-bar { 
-  display: flex; 
-  gap: 20px; 
-  color: var(--text-sub); 
-  align-items: center; 
-  font-size: 22px; 
-  font-weight: 400; 
+.filter-bar {
+  display: flex;
+  gap: 20px;
+  color: var(--text-sub);
+  align-items: center;
+  font-size: 22px;
+  font-weight: 400;
+  overflow-x: auto;
+  scroll-behavior: smooth; /* 🔥 부드러운 스크롤 */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
 
-.filter-item { 
-  cursor: pointer; 
-  transition: color 0.3s; 
+.filter-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-item {
+  cursor: pointer;
+  transition: color 0.3s;
+  white-space: nowrap; /* 🔥 텍스트 줄바꿈 방지 */
+  scroll-snap-align: center; /* 🔥 스냅 정렬 */
 }
 
 .filter-item.active { 
@@ -167,20 +187,20 @@ body {
   background: var(--input-bg); 
   border: none; 
   padding: 10px 12px; 
-  color: white; 
+  color: var(--text-main); 
   width: 400px;
-  border-bottom: 1px solid #555; 
+  border-bottom: 1px solid var(--border-color); 
   font-size: 15px;
   outline: none;
 }
 
 .search-input:focus { 
   background-color: var(--input-hover); 
-  border-bottom: 1px solid #555; 
+  border-bottom: 1px solid var(--text-sub); 
 }
 
 .search-input::placeholder {
-  color: #666;
+  color: #999;
 }
 
 /* (3) 그리드 리스트 */
@@ -197,7 +217,6 @@ body {
   cursor: pointer; 
 }
 
-/* 기존에 .project-img가 없다면 추가 */
 .project-img {
   width: 100%;
   height: auto;
@@ -207,14 +226,14 @@ body {
   display: block;
 }
 
-
 .project-card:hover .project-img { 
-  filter: brightness(0.5); 
+  filter: brightness(0.2); 
 }
 
+/* 🔥 카드 오버레이 - 상단 좌측으로 변경 */
 .card-overlay {
   position: absolute; 
-  bottom: 0; 
+  top: 0;
   left: 0; 
   width: 100%; 
   padding: 20px;
@@ -227,8 +246,8 @@ body {
 }
 
 /* =========================================
-   4. 오른쪽 사이드바 요소
-   ========================================= */
+  4. 오른쪽 사이드바 요소
+  ========================================= */
 
 /* 상단 여백을 메뉴라인과 정렬 */
 .intro-text {
@@ -242,7 +261,7 @@ body {
   line-height: 1.6; 
   font-size: 18px; 
   font-weight: 500; 
-  color: #ededed; 
+  color: var(--text-main); 
   word-break: keep-all; 
 }
 
@@ -263,12 +282,12 @@ body {
 .contact-label { 
   display: inline-block; 
   width: 120px; 
-  color: #fff; 
+  color: var(--text-sub); 
   flex-shrink: 0; 
 }
 
 .contact-value a { 
-  color: #fff; 
+  color: var(--text-main); 
   text-decoration: none; 
   font-weight: normal; 
   cursor: pointer; 
@@ -294,7 +313,7 @@ body {
   display: block; 
   margin-bottom: 10px; 
   font-size: 14px; 
-  color: #ddd; 
+  color: var(--text-sub); 
 }
 
 .form-input, .form-textarea {
@@ -302,18 +321,18 @@ body {
   background-color: var(--input-bg); 
   border: none; 
   padding: 15px; 
-  color: white; 
+  color: var(--text-main); 
   transition: 0.3s; 
   outline: none; 
   font-family: inherit; 
   font-size: 14px;
-  border-bottom: 1px solid #333; 
+  border-bottom: 1px solid var(--border-color); 
   resize: vertical;
 }
 
 .form-input:focus, .form-textarea:focus { 
   background-color: var(--input-hover); 
-  border-bottom: 1px solid #676767; 
+  border-bottom: 1px solid var(--text-sub); 
 }
 
 .error-text { 
@@ -324,9 +343,9 @@ body {
 
 .submit-btn {
   padding: 5px 20px; 
-  border: 1px solid #888; 
+  border: 1px solid var(--text-sub); 
   background: transparent; 
-  color: #fff;
+  color: var(--text-main);
   border-radius: 50px; 
   cursor: pointer; 
   transition: 0.3s; 
@@ -336,14 +355,14 @@ body {
 }
 
 .submit-btn:hover { 
-  background: white; 
-  color: black; 
-  border-color: white; 
+  background: var(--text-main); 
+  color: var(--bg-color); 
+  border-color: var(--text-main); 
 }
 
 /* =========================================
-   5. 스크롤바 숨기기
-   ========================================= */
+  5. 스크롤바 숨기기
+  ========================================= */
 .left-content::-webkit-scrollbar,
 .right-sidebar::-webkit-scrollbar { 
   display: none; 
@@ -353,80 +372,97 @@ body {
 .right-sidebar { 
   -ms-overflow-style: none; 
   scrollbar-width: none; 
-}/* 1. 입력창 기본 디자인 (평소 상태) */
-input, textarea {
-  background-color: #1a1a1a;   /* 아주 어두운 회색 */
-  color: #fff;                 /* 글자색 흰색 */
-  border: 1px solid #333;
-  transition: all 0.3s ease;   /* 색상이 부드럽게 변하도록 설정 */
 }
 
-/* 2. 클릭(포커스) 했을 때 (흰색이 아니라, 약간만 밝아짐) */
+/* 입력창 기본 디자인 */
+input, textarea {
+  background-color: var(--input-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
 input:focus, textarea:focus {
-  background-color: #333;      /* 배경: 조금 더 밝은 회색 */
-  border-color: #fff;          /* 테두리: 흰색으로 강조 */
+  background-color: var(--input-hover);
+  border-color: var(--text-sub);
   outline: none;
 }
 
-/* 🔥 3. (핵심) 자동완성되었을 때 흰색 배경 강제 제거 */
-/* 이 코드가 없으면, 자동완성된 순간 배경이 흰색으로 고정됩니다 */
+/* 자동완성 배경 제거 */
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active {
-  -webkit-text-fill-color: white !important;
-  -webkit-box-shadow: 0 0 0px 1000px #000 inset !important; /* 배경을 검은색으로 덮어씌움 */
+  -webkit-text-fill-color: var(--text-main) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
   transition: background-color 5000s ease-in-out 0s;
-}/* ⚡️ 상단 필터바 높이 강제 축소 (여기서 숫자만 바꾸세요!) */
+}
+
+/* ⚡️ 상단 필터바 높이 */
 .sub-header {
-  height: 45px !important;        /* 👈 이 숫자를 50px로 줄이면 더 납작해집니다! */
-  padding-top: 0px !important;    /* 위쪽 여백 삭제 */
-  padding-bottom: 0px !important; /* 아래쪽 여백 삭제 */
-  
-  /* 글자 세로 중앙 정렬 유지 */
+  height: 50px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
   display: flex !important;
   align-items: center !important;
 }
 
-/* 혹시 글자 자체가 높이를 가지고 있을 경우 대비 */
 .filter-bar {
   margin: 0 !important;
   height: 100% !important;
   display: flex !important;
   align-items: center !important;
 }
-/* =========================================
-   📱 모바일 반응형 (393px 이하)
-   ========================================= */
 
-/* 햄버거 메뉴 스타일 (2줄) */
+/* =========================================
+  햄버거 메뉴 스타일 - 메인 페이지에서 숨기기
+  ========================================= */
 .hamburger-menu {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  gap: 6px; /* 👈 줄 간격 */
+  display: none !important;
 }
 
 .hamburger-menu span {
-  width: 20px;
-  height: 2px;
-  background-color: white;
-  transition: 0.3s;
+  background-color: var(--text-main);
 }
 
-/* X 모양으로 변환 (2줄 버전) */
-.hamburger-menu.open span:nth-child(1) {
-  transform: rotate(45deg) translate(4px, 4px);
-}
-
-.hamburger-menu.open span:nth-child(2) {
-  transform: rotate(-45deg) translate(4px, -4px);
-}
 /* 모바일 오버레이 기본 스타일 */
 .mobile-menu-overlay {
   display: none;
+}
+
+/* =========================================
+   🖥️ 웹 화면에서만 적용 (769px 이상)
+   ========================================= */
+@media (min-width: 769px) {
+  /* 로고 오른쪽으로 */
+  .logo {
+    margin-left: -15px;
+    margin-top: 7px;
+  }
+
+  /* 로고 크기 */
+  .logo-img {
+    height: 96px !important;
+  }
+
+  /* Works/Zines 왼쪽으로, 두께 조절 */
+  .nav-switch { 
+    margin-left: 440px;
+    font-weight: 400;
+  }
+
+  /* Let's Talk 두께 조절 */
+  .lets-talk {
+    font-weight: 400;
+  }
+
+  /* 필터바 높이 늘리기 */
+  .sub-header {
+    height: 55px !important;
+  }
+
+  /* 카테고리 텍스트 아래로 */
+  .sub-header .filter-bar {
+    margin-top: -2px !important;
+  }
 }

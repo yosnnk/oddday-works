@@ -10,15 +10,22 @@
     padding: 0 20px;
     justify-content: space-between;
     z-index: 205 !important; 
-    background-color: #121212; 
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    background-color: #ffffff; 
+    border-bottom: 1px solid #e0e0e0;
     transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+  }
+
+  /* 🔥 모바일 로고 크기 */
+  .logo-img {
+    height: 80px !important;
+    width: auto !important;
+    margin-top: 5px;
   }
 
   /* 🔥 디테일 페이지 열렸을 때 블러 효과 */
   .header.detail-open {
-    background-color: rgba(18, 18, 18, 0.85) !important;
-    backdrop-filter: blur(20px) !important;
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
   }
 
@@ -27,7 +34,7 @@
   .nav-switch {
     display: flex !important;
     position: absolute;
-    left: 68%;
+    left: 64%;
     transform: translateX(-50%);
     font-size: 20px !important;
     font-weight: 500;
@@ -53,7 +60,7 @@
   .hamburger-menu span {
     width: 24px;
     height: 2px;
-    background-color: white;
+    background-color: #121212;
     transition: 0.3s ease-in-out;
     transform-origin: center; 
   }
@@ -61,11 +68,9 @@
   .hamburger-menu.open span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
   .hamburger-menu.open span:nth-child(2) { transform: translateY(-4px) rotate(-45deg); }
 
-  /* 나머지 기존 코드 그대로... */
-
   /* 2️⃣ 레이아웃 */
-  .container { flex-direction: column; padding-top: 50px; }
-  .left-content { width: 100%; border-right: none; height: auto; overflow: visible; }
+  .container { flex-direction: column; padding-top: 50px; background-color: #ffffff; }
+  .left-content { width: 100%; border-right: none; height: auto; overflow: visible; background-color: #ffffff; }
 
   /* 3️⃣ 메뉴바 */
   .sub-header {
@@ -78,20 +83,27 @@
     padding: 0 20px !important; 
     display: flex !important; 
     align-items: center !important;
-    background-color: rgba(18, 18, 18, 0.8) !important;
+    background-color: rgba(255, 255, 255, 0.85) !important;
     backdrop-filter: blur(10px) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-bottom: 1px solid #e0e0e0 !important;
   }
 
   .filter-bar {
-    display: flex; 
-    align-items: center; 
-    height: 100%; 
-    overflow-x: auto; 
-    white-space: nowrap;
-    gap: 15px; 
-    font-size: 18px !important;
-  }
+  display: flex;
+  align-items: center;
+  height: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 15px;
+  font-size: 18px !important;
+  scroll-behavior: smooth; /* 🔥 부드러운 스크롤 */
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory; /* 🔥 스냅 스크롤 */
+}
+
+.filter-item {
+  scroll-snap-align: center; /* 🔥 클릭하면 가운데로 */
+}
 
   .filter-bar::-webkit-scrollbar { display: none; }
 
@@ -107,7 +119,8 @@
   .title-area h1 { 
     font-size: 24px !important; 
     margin-bottom: 0 !important; 
-    margin-top: 40px !important; 
+    margin-top: 40px !important;
+    color: #121212;
   }
 
   .search-input {
@@ -115,92 +128,97 @@
     margin-bottom: 0 !important; 
     font-size: 18px;
     background: transparent !important; 
-    border-bottom: 1px solid #555 !important; 
+    border-bottom: 1px solid #ccc !important; 
     padding: 8px 0 !important;
+    color: #121212;
+  }
+
+  .search-input::placeholder {
+    color: #999;
   }
 
   /* ========================================================
    5️⃣ 그리드 & 카드 (🔥 실제 이미지)
    ======================================================== */
-.masonry-grid {
-  column-count: 2 !important; 
-  column-gap: 12px !important; 
-  padding: 0 16px 40px 16px !important; 
-  margin-top: 6px !important;
-}
+  .masonry-grid {
+    column-count: 2 !important; 
+    column-gap: 12px !important; 
+    padding: 0 16px 40px 16px !important; 
+    margin-top: 6px !important;
+  }
 
-.project-card { 
-  margin-bottom: 12px; 
-  position: relative; 
-  transition: transform 0.1s ease-in-out !important;
-  break-inside: avoid;
-  width: 100%;
-  overflow: hidden;
-}
+  .project-card { 
+    margin-bottom: 12px; 
+    position: relative; 
+    transition: transform 0.1s ease-in-out !important;
+    break-inside: avoid;
+    width: 100%;
+    overflow: hidden;
+  }
 
-.project-card:active { 
-  transform: scale(0.96) !important; 
-}
+  .project-card:active { 
+    transform: scale(0.96) !important; 
+  }
 
-/* 🔥 실제 이미지 표시 */
-.project-img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-}
+  /* 🔥 실제 이미지 표시 */
+  .project-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
 
-/* 🟥 가로형 (2:1) */
-.project-card.wide {
-  aspect-ratio: 2 / 1;
-}
+  /* 🟥 가로형 (2:1) */
+  .project-card.wide {
+    aspect-ratio: 2 / 1;
+  }
 
-.project-card.wide .project-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  .project-card.wide .project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-/* 🟨 정사각형 (1:1) */
-.project-card.square {
-  aspect-ratio: 1 / 1;
-}
+  /* 🟨 정사각형 (1:1) */
+  .project-card.square {
+    aspect-ratio: 1 / 1;
+  }
 
-.project-card.square .project-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  .project-card.square .project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-/* 🟩 세로형 A4 (1:1.414) */
-.project-card.tall {
-  aspect-ratio: 1 / 1.414;
-}
+  /* 🟩 세로형 A4 (1:1.414) */
+  .project-card.tall {
+    aspect-ratio: 1 / 1.414;
+  }
 
-.project-card.tall .project-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  .project-card.tall .project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-/* 타입 없는 경우 기본값 (세로) */
-.project-card:not(.wide):not(.square):not(.tall) {
-  aspect-ratio: 1 / 1.414;
-}
+  /* 타입 없는 경우 기본값 (세로) */
+  .project-card:not(.wide):not(.square):not(.tall) {
+    aspect-ratio: 1 / 1.414;
+  }
 
-.card-overlay { 
-  display: none !important; 
-}
+  .card-overlay { 
+    display: none !important; 
+  }
 
-.card-overlay h3 { 
-  font-size: 20px; 
-  margin-bottom: 5px; 
-}
+  .card-overlay h3 { 
+    font-size: 20px; 
+    margin-bottom: 5px; 
+  }
 
-.card-overlay p { 
-  font-size: 14px; 
-  color: #ccc; 
-}
+  .card-overlay p { 
+    font-size: 14px; 
+    color: #666; 
+  }
 
   /* 6️⃣ 모바일 메뉴 */
   .mobile-menu-overlay {
@@ -210,7 +228,7 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: #121212; 
+    background-color: #ffffff; 
     z-index: 200 !important; 
     padding: 52px 20px 0px 20px;
     overflow-y: auto;
@@ -226,40 +244,41 @@
   .mobile-menu-title {
     font-size: 20px;
     font-weight: 500;
-    color: #fff;
-    border-bottom: 1px solid #333;
+    color: #121212;
+    border-bottom: 1px solid #e0e0e0;
     margin-left: -20px;
     margin-right: -20px;
     padding-left: 20px;
     padding-right: 20px;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
-    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    margin-top: 8px;
+    padding-top: 0px;
   }
 
   .intro-text p {
-    font-size: 15px;
+    font-size: 18px;
     line-height: 1.6;
     margin-bottom: 20px;
-    color: #ededed;
+    color: #121212;
   }
 
   .form-header-area {
     display: flex; 
     justify-content: space-between; 
     align-items: center;
-    border-bottom: 1px solid #333; 
+    border-bottom: 1px solid #e0e0e0; 
     padding-bottom: 10px; 
     margin-bottom: 20px;
   }
 
-  .form-header-area h3 { font-size: 20px; font-weight: 500; margin: 0; }
+  .form-header-area h3 { font-size: 20px; font-weight: 500; margin: 0; color: #121212; }
 
   .form-submit-btn {
     padding: 6px 16px; 
-    border: 1px solid #666; 
+    border: 1px solid #888; 
     background: transparent;
-    color: #fff; 
+    color: #121212; 
     border-radius: 50px; 
     font-size: 14px; 
     cursor: pointer;
@@ -267,15 +286,16 @@
 
   .contact-form-area .input-group { margin-bottom: 20px; }
   .contact-form-area .input-group:last-child { margin-bottom: 0 !important; }
-  .contact-form-area .form-label { display: block; margin-bottom: 8px; font-size: 14px; color: #ccc; }
+  .contact-form-area .form-label { display: block; margin-bottom: 8px; font-size: 14px; color: #666; }
 
   .contact-form-area .form-input, 
   .contact-form-area .form-textarea {
     width: 100%; 
-    background-color: #1c1c1c !important; 
+    background-color: #f5f5f5 !important; 
     border: none !important;
+    border-bottom: 1px solid #e0e0e0 !important;
     padding: 12px; 
-    color: white; 
+    color: #121212; 
     font-size: 15px;
   }
 
@@ -284,16 +304,38 @@
   /* 7️⃣ 모바일 푸터 */
   .mobile-footer-content {
     display: block !important; 
-    background-color: #121212 !important;
+    background-color: #ffffff !important;
     padding: 60px 20px 80px 20px; 
     border-top: none !important;
   }
 
   .mobile-footer-content .intro-text p {
-    font-size: 15px; 
+    font-size: 18px; 
     line-height: 1.6; 
     margin-bottom: 20px; 
-    color: #ededed;
+    color: #121212;
+  }
+
+  /* 🔥 소개글과 연락처 사이 여백 추가 */
+  .mobile-footer-content .contact-info {
+    margin-top: 48px;
+  }
+
+  .mobile-footer-content .contact-label {
+    color: #888;
+  }
+
+  .mobile-footer-content .contact-value a {
+    color: #121212;
+  }
+
+  /* 모바일 메뉴 연락처 */
+  .mobile-menu-overlay .contact-label {
+    color: #888;
+  }
+
+  .mobile-menu-overlay .contact-value a {
+    color: #121212;
   }
   
   /* 8️⃣ 스크롤바 삭제 */

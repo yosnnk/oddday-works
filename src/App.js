@@ -8,9 +8,10 @@ import MobileDetail from './MobileDetail';
 import emailjs from '@emailjs/browser';
 import AdminPage from './AdminPage';
 import Upload from './Upload';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc} from 'firebase/firestore';
 import { db } from './firebase';  
 import Login from './Login';
+import SplashScreen from './SplashScreen';
 
 // ==============================================================================
 // 1. MainPage 컴포넌트
@@ -67,7 +68,7 @@ function MainPage({ firestoreProjects, loading, categoriesStd, categoriesLab }) 
         message: form.content
       };
 
-      emailjs.send('service_kjp37ef', 'template_ps03fo8', templateParams, '4B-9egCPFKnE3sLzN')
+      emailjs.send('service_hfs38si', 'template_xp7gpyd', templateParams, 'p8OFe59tE2kL-an3F')
       .then(() => {
         alert('문의가 성공적으로 전송되었습니다!');
         setForm({ name: '', content: '', email: '' });
@@ -113,16 +114,17 @@ function MainPage({ firestoreProjects, loading, categoriesStd, categoriesLab }) 
         className={`header ${selectedProject ? 'detail-open' : ''}`}
         style={{ zIndex: selectedProject ? 300 : 205 }}
       >
-        <div className="logo" onClick={handleReset}>ESSENT.STUDIO</div>
-        
+        <div className="logo" onClick={handleReset}>
+          <img src="/logo.png" alt="ESSENT.STUDIO" className="logo-img" />
+        </div>
         <div className="nav-switch" style={{ 
             opacity: menuOpen || selectedProject ? 0 : 1, 
             pointerEvents: menuOpen || selectedProject ? 'none' : 'auto',
             transition: 'opacity 0.2s ease'
           }}>
-          <span className={mode === 'Std' ? 'active' : ''} onClick={() => { setMode('Std'); setCategory('All Project'); }}>Std</span> 
-          <span style={{color: '#fff', margin: '0 4px'}}>/</span> 
-          <span className={mode === 'Lab' ? 'active' : ''} onClick={() => { setMode('Lab'); setCategory('All Project'); }}>Lab</span>
+          <span className={mode === 'Std' ? 'active' : ''} onClick={() => { setMode('Std'); setCategory('All Project'); }}>Work</span> 
+          <span style={{color: '#121212', margin: '0 4px'}}>/</span> 
+          <span className={mode === 'Lab' ? 'active' : ''} onClick={() => { setMode('Lab'); setCategory('All Project'); }}>Zine</span>
         </div>
         
         <div className="lets-talk">Let's Talk</div>
@@ -241,11 +243,37 @@ function MainPage({ firestoreProjects, loading, categoriesStd, categoriesLab }) 
                     )}
                     
                     <div className="card-overlay">
-                      <div>
-                        <h3 style={{fontSize: '16px', fontWeight: 'bold'}}>{project.title}</h3>
-                        <p style={{fontSize: '13px', color: '#ccc', marginTop: '5px'}}>{project.sub}</p>
-                      </div>
-                    </div>
+  <div>
+    {project.category && (
+      <p style={{fontSize: '12px', color: '#888', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px'}}>
+        {project.category}
+      </p>
+    )}
+    <h3 style={{fontSize: '20px', fontWeight: '600', marginBottom: '12px', color: '#fff'}}>
+      {project.title}
+    </h3>
+    <div style={{fontSize: '13px', lineHeight: '1.5'}}>
+      {project.client && (
+        <p style={{margin: '0 0 2px 0'}}>
+          <span style={{color: '#888', marginRight: '12px'}}>Client</span>
+          <span style={{color: '#fff'}}>{project.client}</span>
+        </p>
+      )}
+      {project.role && (
+        <p style={{margin: '0 0 2px 0'}}>
+          <span style={{color: '#888', marginRight: '12px'}}>Role</span>
+          <span style={{color: '#fff'}}>{project.role}</span>
+        </p>
+      )}
+      {project.date && (
+        <p style={{margin: '0'}}>
+          <span style={{color: '#888', marginRight: '12px'}}>Date</span>
+          <span style={{color: '#fff'}}>{project.date}</span>
+        </p>
+      )}
+    </div>
+  </div>
+</div>
                   </div>
                 );
               })}
@@ -254,23 +282,23 @@ function MainPage({ firestoreProjects, loading, categoriesStd, categoriesLab }) 
 
           <div className="mobile-footer-content" style={{ padding: '40px 20px 30px 20px' }}>
             <div className="intro-text" style={{marginTop: 0}}>
-              <p>Essent는 디자인으로 소통을 설계하는 디자인 스튜디오 입니다.</p>
-              <p>디자인은 혼자 만드는 결과물이 아니라, 여러 이해 관계자와의 대화 속에서 완성된다고 생각합니다.</p>
-              <p>Essent는 계속해서 배우고 정리하며, 의도를 정확히 전달하고 이해하는 과정을 통해 소통이 되는 디자이너로 일하기 위해 운영됩니다.</p>
+              <p>ODD DAY WORKS는 일상 속 낯설고 기묘한 영감을 다채로운 디자인으로 시각화하는 스튜디오입니다.</p>
+              <p>우리의 작업은 종종 이상할 수 있습니다. 한계나 제한을 두지 않고 계속해서 실험하고 도전합니다.</p>
+              <p>계속해서 배우고 정리하며, 의도를 정확히 전달하고 이해하는 과정을 통해 소통이 되는 디자이너로 일하기 위해 운영됩니다.</p>
             </div>
             
             <div className="contact-info">
               <div className="contact-row">
                 <span className="contact-label">Email</span>
-                <span className="contact-value"><a href="mailto:Essent.std@gmail.com">Essent.std@gmail.com</a></span>
+                <span className="contact-value"><a href="mailto:Essent.std@gmail.com">oddday.works@gmail.com</a></span>
               </div>
               <div className="contact-row">
                 <span className="contact-label">Instagram</span>
-                <span className="contact-value"><a href="https://www.instagram.com/Essent.std" target="_blank" rel="noopener noreferrer">@Essent.std</a></span>
+                <span className="contact-value"><a href="https://www.instagram.com/oddday.works" target="_blank" rel="noopener noreferrer">@oddday.works</a></span>
               </div>
               <div className="contact-row">
                 <span className="contact-label">Behance</span>
-                <span className="contact-value"><a href="https://www.behance.net/essentstd" target="_blank" rel="noopener noreferrer">@Essent.std</a></span>
+                <span className="contact-value"><a href="https://www.behance.net/odddayworks" target="_blank" rel="noopener noreferrer">@oddday.works</a></span>
               </div>
             </div>
           </div>
@@ -278,14 +306,14 @@ function MainPage({ firestoreProjects, loading, categoriesStd, categoriesLab }) 
 
         <aside className="right-sidebar">
           <div className="intro-text">
-            <p style={{marginBottom: '24px'}}>Essent는 디자인으로 소통을 설계하는 디자인 스튜디오 입니다.</p>
-            <p style={{marginBottom: '24px'}}>디자인은 혼자 만드는 결과물이 아니라, 여러 이해 관계자와의 대화 속에서 완성된다고 생각합니다.</p>
-            <p>Essent는 계속해서 배우고 정리하며, 의도를 정확히 전달하고 이해하는 과정을 통해 소통이 되는 디자이너로 일하기 위해 운영됩니다.</p>
+            <p style={{marginBottom: '24px'}}>ODD DAY WORKS는 일상 속 낯설고 기묘한 영감을 다채로운 디자인으로 시각화하는 스튜디오입니다.</p>
+            <p style={{marginBottom: '24px'}}>우리의 작업은 종종 이상할 수 있습니다. 한계나 제한을 두지 않고 계속해서 실험하고 도전합니다. </p>
+            <p>계속해서 배우고 정리하며, 의도를 정확히 전달하고 이해하는 과정을 통해 소통이 되는 디자이너로 일하기 위해 운영됩니다.</p>
           </div>
           <div className="contact-info">
-            <div className="contact-row"><span className="contact-label">Email</span><span className="contact-value"><a href="mailto:Essent.std@gmail.com">Essent.std@gmail.com</a></span></div>
-            <div className="contact-row"><span className="contact-label">Instagram</span><span className="contact-value"><a href="https://www.instagram.com/Essent.std" target="_blank" rel="noopener noreferrer">@Essent.std</a></span></div>
-            <div className="contact-row"><span className="contact-label">Behance</span><span className="contact-value"><a href="https://www.behance.net/essentstd" target="_blank" rel="noopener noreferrer">@Essent.std</a></span></div>
+            <div className="contact-row"><span className="contact-label">Email</span><span className="contact-value"><a href="mailto:oddday.works@gmail.com">oddday.works@gmail.com</a></span></div>
+            <div className="contact-row"><span className="contact-label">Instagram</span><span className="contact-value"><a href="https://www.instagram.com/oddday.works" target="_blank" rel="noopener noreferrer">@oddday.works</a></span></div>
+            <div className="contact-row"><span className="contact-label">Behance</span><span className="contact-value"><a href="https://www.behance.net/odddayworks" target="_blank" rel="noopener noreferrer">@oddday.works</a></span></div>
           </div>
           <div className="contact-form-area">
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom:'1px solid #333', paddingBottom:'12px', marginBottom:'15px'}}>
@@ -318,23 +346,23 @@ function MainPage({ firestoreProjects, loading, categoriesStd, categoriesLab }) 
           <h2 className="mobile-menu-title">Let's Talk</h2>
           
           <div className="intro-text" style={{marginTop: 0}}>
-            <p style={{marginBottom: '20px'}}>Essent는 디자인으로 소통을 설계하는 디자인 스튜디오 입니다.</p>
-            <p style={{marginBottom: '20px'}}>디자인은 혼자 만드는 결과물이 아니라, 여러 이해 관계자와의 대화 속에서 완성된다고 생각합니다.</p>
-            <p>Essent는 계속해서 배우고 정리하며, 의도를 정확히 전달하고 이해하는 과정을 통해 소통이 되는 디자이너로 일하기 위해 운영됩니다.</p>
+            <p style={{marginBottom: '20px'}}>ODD DAY WORKS는 일상 속 낯설고 기묘한 영감을 다채로운 디자인으로 시각화하는 스튜디오입니다.</p>
+            <p style={{marginBottom: '20px'}}>우리의 작업은 종종 이상할 수 있습니다. 한계나 제한을 두지 않고 계속해서 실험하고 도전합니다.</p>
+            <p>ODD DAY WORKS는 계속해서 배우고 정리하며, 의도를 정확히 전달하고 이해하는 과정을 통해 소통이 되는 디자이너로 일하기 위해 운영됩니다.</p>
           </div>
 
-          <div className="contact-info" style={{marginTop: '30px', marginBottom: '40px'}}>
+          <div className="contact-info" style={{marginTop: '40px', marginBottom: '40px'}}>
             <div className="contact-row">
               <span className="contact-label" style={{width:'100px'}}>Email</span>
-              <span className="contact-value"><a href="mailto:Essent.std@gmail.com">Essent.std@gmail.com</a></span>
+              <span className="contact-value"><a href="mailto:oddday.works@gmail.com">oddday.works@gmail.com</a></span>
             </div>
             <div className="contact-row">
               <span className="contact-label" style={{width:'100px'}}>Instagram</span>
-              <span className="contact-value"><a href="https://www.instagram.com/Essent.std" target="_blank" rel="noopener noreferrer">@Essent.std</a></span>
+              <span className="contact-value"><a href="https://www.instagram.com/oddday.works" target="_blank" rel="noopener noreferrer">@oddday.works</a></span>
             </div>
             <div className="contact-row">
               <span className="contact-label" style={{width:'100px'}}>Behance</span>
-              <span className="contact-value"><a href="https://www.behance.net/essentstd" target="_blank" rel="noopener noreferrer">@Essent.std</a></span>
+              <span className="contact-value"><a href="https://www.behance.net/odddayworks" target="_blank" rel="noopener noreferrer">@oddday.works</a></span>
             </div>
           </div>
 
@@ -377,19 +405,19 @@ function MainPage({ firestoreProjects, loading, categoriesStd, categoriesLab }) 
   );
 }
 
-// ==============================================================================
-// 🔥 모바일 디테일 오버레이
-// ==============================================================================
 function MobileDetailOverlay({ project, onClose }) {
   const containerRef = useRef(null);
   const infoSectionRef = useRef(null);
   const [isClosing, setIsClosing] = useState(false);
   const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
-  const [showFixedInfo, setShowFixedInfo] = useState(true);
+  const [showFixedInfo, setShowFixedInfo] = useState(null);
+  const [isInitialized, setIsInitialized] = useState(false);
+
 
   const isVideo = useCallback((url) => {
     return url && url.match(/\.(mp4|webm|ogg|mov)$/i);
   }, []);
+
 
   const allImages = useMemo(() => {
     const images = [];
@@ -425,6 +453,12 @@ function MobileDetailOverlay({ project, onClose }) {
     });
   }, []);
 
+  const handleTouchMove = useCallback((e) => {
+    if (touchStart.x < 30) {
+      e.preventDefault();
+    }
+  }, [touchStart]);
+
   const handleTouchEnd = useCallback((e) => {
     const container = containerRef.current;
     if (!container) return;
@@ -447,8 +481,9 @@ function MobileDetailOverlay({ project, onClose }) {
     setTouchStart({ x: 0, y: 0 });
   }, [touchStart, handleClose]);
 
-  // 🔥 스크롤 핸들러 - 정보섹션이 화면에 보이면 블러박스 숨김
   const handleScroll = useCallback(() => {
+    if (!isInitialized) return;
+    
     const container = containerRef.current;
     const infoSection = infoSectionRef.current;
     if (!container || !infoSection) return;
@@ -456,20 +491,60 @@ function MobileDetailOverlay({ project, onClose }) {
     const containerRect = container.getBoundingClientRect();
     const infoRect = infoSection.getBoundingClientRect();
     
-    // 정보섹션 상단이 화면 하단에 닿으면 블러박스 숨김
-    if (infoRect.top <= containerRect.bottom) {
+    if (infoRect.top < containerRect.bottom - 10) {
       setShowFixedInfo(false);
     } else {
       setShowFixedInfo(true);
     }
+  }, [isInitialized]);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.touchAction = 'none';
+    
+    window.history.pushState(null, '', window.location.href);
+    
+    const handlePopState = (e) => {
+      window.history.pushState(null, '', window.location.href);
+    };
+    
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.touchAction = '';
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, []);
 
   useEffect(() => {
     const container = containerRef.current;
     if (container) {
       container.addEventListener('scroll', handleScroll);
-      handleScroll();
-      return () => container.removeEventListener('scroll', handleScroll);
+      
+      const timer = setTimeout(() => {
+        const infoSection = infoSectionRef.current;
+        if (container && infoSection) {
+          const containerRect = container.getBoundingClientRect();
+          const infoRect = infoSection.getBoundingClientRect();
+          
+          if (infoRect.top < containerRect.bottom - 10) {
+            setShowFixedInfo(false);
+          } else {
+            setShowFixedInfo(true);
+          }
+        }
+        setIsInitialized(true);
+      }, 300);
+      
+      return () => {
+        container.removeEventListener('scroll', handleScroll);
+        clearTimeout(timer);
+      };
     }
   }, [handleScroll]);
 
@@ -487,9 +562,10 @@ function MobileDetailOverlay({ project, onClose }) {
       ref={containerRef}
       className={`mobile-detail-overlay ${isClosing ? 'closing' : ''}`}
       onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      style={{ touchAction: 'pan-y' }}
     >
-      {/* 헤더는 메인페이지 헤더 사용 (숨김) */}
       <div className="mobile-overlay-header">
         <div className="overlay-logo" onClick={handleClose}>
           ESSENT.STUDIO
@@ -497,9 +573,7 @@ function MobileDetailOverlay({ project, onClose }) {
         <div style={{ width: '30px' }}></div>
       </div>
 
-      {/* 컨텐츠 컨테이너 */}
       <div className="mobile-detail-content">
-        {/* 이미지들 세로 나열 */}
         <div className="mobile-images-vertical">
           {allImages.map((src, idx) => (
             <div key={idx} className="mobile-image-item">
@@ -522,7 +596,6 @@ function MobileDetailOverlay({ project, onClose }) {
           ))}
         </div>
 
-        {/* 하단 정보 섹션 */}
         <div ref={infoSectionRef} className="mobile-info-section">
           <div className="mobile-info-header">
             <div className="mobile-info-tags">
@@ -561,9 +634,9 @@ function MobileDetailOverlay({ project, onClose }) {
             )}
           </div>
         </div>
+
       </div>
 
-      {/* 🔥 하단 고정 정보박스 (블러박스) */}
       <div 
         className={`mobile-fixed-info ${showFixedInfo ? 'visible' : 'hidden'}`}
       >
@@ -588,15 +661,20 @@ function MobileDetailOverlay({ project, onClose }) {
 // ==============================================================================
 function DetailRouter() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      const newIsMobile = window.innerWidth <= 768;
+      if (newIsMobile !== isMobile) {
+        navigate('/');
+      }
+      setIsMobile(newIsMobile);
     };
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [isMobile, navigate]);
 
   useEffect(() => {
     document.body.classList.add('detail-open');
@@ -609,10 +687,11 @@ function DetailRouter() {
   return isMobile ? <MobileDetail /> : <Detail />;
 }
 
-// ==============================================================================
+/// ==============================================================================
 // App 컴포넌트
 // ==============================================================================
 function App() {
+  const [showSplash, setShowSplash] = useState(true); // 🔥 스플래시 상태 추가
   const [firestoreProjects, setFirestoreProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categoriesStd, setCategoriesStd] = useState([]);
@@ -644,6 +723,11 @@ function App() {
     fetchData();
   }, []);
 
+  // 🔥 스플래시 화면 먼저 보여주기
+ if (showSplash || loading) {
+    return <SplashScreen onFinish={() => setShowSplash(false)} dataReady={!loading} />;
+  }
+
   return (
     <Routes>
       <Route path="/" element={
@@ -652,7 +736,7 @@ function App() {
           loading={loading}
           categoriesStd={categoriesStd}
           categoriesLab={categoriesLab}
-        />
+        />  
       } />
       <Route path="/project/:id" element={<DetailRouter />} />
       <Route path="/login" element={<Login />} />
